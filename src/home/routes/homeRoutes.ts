@@ -1,6 +1,7 @@
 import HomeView from "@/home/views/HomeView.vue"
+import type { RouteRecordRaw } from "vue-router"
 
-const homeRoutes = [
+const homeRoutes: readonly RouteRecordRaw[] = [
   {
     path: "/",
     name: "home",
