@@ -1,17 +1,31 @@
 <script lang="ts" setup>
-import data from "@/data/jobOffers.json"
 import JobOfferCard from "@/jobOffer/components/JobOfferCard.vue"
 import ShowAllJobsButton from "@/jobOffer/components/ShowAllJobsButton.vue"
-import { ref } from "vue"
+import type { JobOffer } from "@/jobOffer/entities/jobOffer"
+import axios from "axios"
+import { onMounted, reactive } from "vue"
 
-interface JobOffersGrid {
+interface JobOffersGridProps {
   limit?: number
   displayShowAllJobsButton?: boolean
 }
 
-const { limit, displayShowAllJobsButton = false } = defineProps<JobOffersGrid>()
+const { limit, displayShowAllJobsButton = false } = defineProps<JobOffersGridProps>()
 
-const jobOffers = ref(data["job-offers"])
+const state = reactive({
+  jobOffers: [] as JobOffer[],
+  isLoading: true
+})
+onMounted(async () => {
+  try {
+    const { data } = await axios.get<JobOffer[]>("http://localhost:5000/job-offers")
+    state.jobOffers = data
+  } catch (error) {
+    console.error(error)
+  } finally {
+    state.isLoading = false
+  }
+})
 </script>
 
 <template>
@@ -19,9 +33,15 @@ const jobOffers = ref(data["job-offers"])
     <div class="container-xl lg:container m-auto">
       <h2 class="text-3xl font-bold text-green-500 mb-6 text-center">Browse Jobs</h2>
     </div>
-    <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
+
+    <div v-if="state.isLoading" role="progressbar" class="flex items-center gap-2">
+      <div class="border-gray-300 h-10 w-10 animate-spin rounded-full border-8 border-t-blue-600" />
+      <span>Loading...</span>
+    </div>
+
+    <div v-else class="grid grid-cols-1 gap-6 md:grid-cols-3">
       <JobOfferCard
-        v-for="jobOffer in jobOffers.slice(0, limit ?? jobOffers.length)"
+        v-for="jobOffer in state.jobOffers.slice(0, limit ?? state.jobOffers.length)"
         :key="jobOffer.id"
         :job-offer="jobOffer"
       />
