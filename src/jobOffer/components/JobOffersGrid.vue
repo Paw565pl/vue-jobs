@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import data from "@/data/jobOffers.json"
-import JobOffer from "@/jobOffer/components/JobOffer.vue"
+import JobOfferCard from "@/jobOffer/components/JobOfferCard.vue"
 import ShowAllJobsButton from "@/jobOffer/components/ShowAllJobsButton.vue"
 import { ref } from "vue"
 
@@ -20,7 +20,7 @@ const jobOffers = ref(data["job-offers"])
       <h2 class="text-3xl font-bold text-green-500 mb-6 text-center">Browse Jobs</h2>
     </div>
     <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
-      <JobOffer
+      <JobOfferCard
         v-for="jobOffer in jobOffers.slice(0, limit ?? jobOffers.length)"
         :key="jobOffer.id"
         :job-offer="jobOffer"
