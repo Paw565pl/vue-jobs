@@ -1,6 +1,14 @@
 <script lang="ts" setup>
 import logo from "@/core/assets/img/logo.png"
+import type { NavBarLinkProps } from "@/core/components/NavBarLink.vue"
+import NavBarLink from "@/core/components/NavBarLink.vue"
 import { RouterLink } from "vue-router"
+
+const links: NavBarLinkProps[] = [
+  { path: "/", text: "Home" },
+  { path: "/job-offers", text: "Jobs" },
+  { path: "/add-job-offer", text: "Add Job" }
+]
 </script>
 
 <template>
@@ -14,15 +22,7 @@ import { RouterLink } from "vue-router"
           </RouterLink>
           <div class="md:ml-auto">
             <div class="flex space-x-2">
-              <RouterLink to="/" class="rounded-md bg-green-900 px-3 py-2 text-white hover:bg-gray-900 hover:text-white"
-                >Home</RouterLink
-              >
-              <RouterLink to="/job-offers" class="rounded-md px-3 py-2 text-white hover:bg-green-900 hover:text-white"
-                >Jobs</RouterLink
-              >
-              <a href="add-job.html" class="rounded-md px-3 py-2 text-white hover:bg-green-900 hover:text-white"
-                >Add Job</a
-              >
+              <NavBarLink v-for="link in links" :key="link.path" :path="link.path" :text="link.text" />
             </div>
           </div>
         </div>
