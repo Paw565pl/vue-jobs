@@ -8,6 +8,6 @@ import JobOffersGrid from "@/jobOffer/components/JobOffersGrid.vue"
   <main>
     <BaseHero title="Become a Vue Developer" subtitle="Find the Vue job that fits your skills and needs" />
     <HomeCards />
-    <JobOffersGrid :limit="3" :show-all-jobs-button="true" />
+    <JobOffersGrid :limit="3" :displayShowAllJobsButton="true" />
   </main>
 </template>

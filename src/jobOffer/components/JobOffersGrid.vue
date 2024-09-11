@@ -1,14 +1,15 @@
 <script lang="ts" setup>
 import jobOffersData from "@/data/jobOffers.json"
-import { ref } from "vue"
 import JobOffer from "@/jobOffer/components/JobOffer.vue"
+import ShowAllJobsButton from "@/jobOffer/components/ShowAllJobsButton.vue"
+import { ref } from "vue"
 
 interface JobOffersGrid {
   limit?: number
-  showAllJobsButton?: boolean
+  displayShowAllJobsButton?: boolean
 }
 
-const { limit, showAllJobsButton = false } = defineProps<JobOffersGrid>()
+const { limit, displayShowAllJobsButton = false } = defineProps<JobOffersGrid>()
 
 const jobOffers = ref(jobOffersData)
 </script>
@@ -27,9 +28,5 @@ const jobOffers = ref(jobOffersData)
     </div>
   </section>
 
-  <section v-if="showAllJobsButton" class="m-auto my-10 max-w-lg px-6">
-    <a href="jobs.html" class="block rounded-xl bg-black px-6 py-4 text-center text-white hover:bg-gray-700"
-      >View All Jobs</a
-    >
-  </section>
+  <ShowAllJobsButton v-if="displayShowAllJobsButton" />
 </template>
