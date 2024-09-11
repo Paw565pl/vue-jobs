@@ -5,6 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "server": "json-server --watch src/data/jobOffers.json --delay 500 -p 5000",
+    "start": "run-p server dev",
     "build": "run-p type-check \"build-only {@}\" --",
     "preview": "vite preview",
     "build-only": "vite build",
@@ -30,6 +32,7 @@
     "autoprefixer": "^10.4.20",
     "eslint": "^8.57.0",
     "eslint-plugin-vue": "^9.28.0",
+    "json-server": "0.17.4",
     "npm-run-all2": "^6.2.2",
     "postcss": "^8.4.45",
     "prettier": "^3.3.3",

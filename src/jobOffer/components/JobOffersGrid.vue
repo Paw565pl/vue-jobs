@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import jobOffersData from "@/data/jobOffers.json"
+import data from "@/data/jobOffers.json"
 import JobOffer from "@/jobOffer/components/JobOffer.vue"
 import ShowAllJobsButton from "@/jobOffer/components/ShowAllJobsButton.vue"
 import { ref } from "vue"
@@ -11,7 +11,7 @@ interface JobOffersGrid {
 
 const { limit, displayShowAllJobsButton = false } = defineProps<JobOffersGrid>()
 
-const jobOffers = ref(jobOffersData)
+const jobOffers = ref(data["job-offers"])
 </script>
 
 <template>
