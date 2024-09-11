@@ -1,14 +1,14 @@
 <script lang="ts" setup>
 import jobOffersData from "@/data/jobOffers.json"
 import { ref } from "vue"
-import JobOffer from "./JobOffer.vue"
+import JobOffer from "@/jobOffer/components/JobOffer.vue"
 
-interface JobListingProps {
+interface JobOffersGrid {
   limit?: number
   showAllJobsButton?: boolean
 }
 
-const { limit, showAllJobsButton = false } = defineProps<JobListingProps>()
+const { limit, showAllJobsButton = false } = defineProps<JobOffersGrid>()
 
 const jobOffers = ref(jobOffersData)
 </script>

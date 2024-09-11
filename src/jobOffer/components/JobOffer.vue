@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import type { JobOffer } from "@/entities/jobOffer"
-import { computed, ref } from "vue"
+import type { JobOffer } from "@/jobOffer/entities/jobOffer"
 import { Icon } from "@iconify/vue"
+import { computed, ref } from "vue"
 
 interface JobOfferProps {
   jobOffer: JobOffer

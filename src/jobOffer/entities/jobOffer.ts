@@ -1,4 +1,4 @@
-import type { Company } from "./company"
+import type { Company } from "@/jobOffer/entities/company"
 
 export interface JobOffer {
   id: number

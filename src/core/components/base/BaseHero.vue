@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-interface HomeHeroProps {
+interface BaseHeroProps {
   title: string
   subtitle: string
 }
 
-const { title, subtitle } = defineProps<HomeHeroProps>()
+const { title, subtitle } = defineProps<BaseHeroProps>()
 </script>
 
 <template>
