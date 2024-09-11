@@ -17,7 +17,9 @@ import { RouterLink } from "vue-router"
               <RouterLink to="/" class="rounded-md bg-green-900 px-3 py-2 text-white hover:bg-gray-900 hover:text-white"
                 >Home</RouterLink
               >
-              <a href="jobs.html" class="rounded-md px-3 py-2 text-white hover:bg-green-900 hover:text-white">Jobs</a>
+              <RouterLink to="/job-offers" class="rounded-md px-3 py-2 text-white hover:bg-green-900 hover:text-white"
+                >Jobs</RouterLink
+              >
               <a href="add-job.html" class="rounded-md px-3 py-2 text-white hover:bg-green-900 hover:text-white"
                 >Add Job</a
               >
