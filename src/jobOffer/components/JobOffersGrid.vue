@@ -2,9 +2,7 @@
 import BaseLoadingIndicator from "@/core/components/base/BaseLoadingIndicator.vue"
 import JobOfferCard from "@/jobOffer/components/JobOfferCard.vue"
 import ShowAllJobsButton from "@/jobOffer/components/ShowAllJobsButton.vue"
-import type { JobOffer } from "@/jobOffer/entities/jobOffer"
-import axios from "axios"
-import { onMounted, reactive } from "vue"
+import useFetchJobOffers from "@/jobOffer/composables/useFetchJobOffers"
 
 interface JobOffersGridProps {
   limit?: number
@@ -13,20 +11,7 @@ interface JobOffersGridProps {
 
 const { limit, displayShowAllJobsButton = false } = defineProps<JobOffersGridProps>()
 
-const state = reactive({
-  jobOffers: [] as JobOffer[],
-  isLoading: true
-})
-onMounted(async () => {
-  try {
-    const { data } = await axios.get<JobOffer[]>("http://localhost:5000/job-offers")
-    state.jobOffers = data
-  } catch (error) {
-    console.error(error)
-  } finally {
-    state.isLoading = false
-  }
-})
+const { data: jobOffers, isLoading } = useFetchJobOffers()
 </script>
 
 <template>
@@ -35,11 +20,11 @@ onMounted(async () => {
       <h2 class="text-3xl font-bold text-green-500 mb-6 text-center">Browse Jobs</h2>
     </div>
 
-    <BaseLoadingIndicator v-if="state.isLoading" />
+    <BaseLoadingIndicator v-if="isLoading" />
 
     <div v-else class="grid grid-cols-1 gap-6 md:grid-cols-3 max-w-7xl mx-auto">
       <JobOfferCard
-        v-for="jobOffer in state.jobOffers.slice(0, limit ?? state.jobOffers.length)"
+        v-for="jobOffer in jobOffers?.slice(0, limit ?? jobOffers.length)"
         :key="jobOffer.id"
         :job-offer="jobOffer"
       />
