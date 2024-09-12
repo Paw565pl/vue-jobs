@@ -4,6 +4,7 @@ import axios from "axios"
 import { onMounted, reactive } from "vue"
 import { RouterLink, useRoute } from "vue-router"
 import { Icon } from "@iconify/vue"
+import GoToHomeButton from "./GoToHomeButton.vue"
 
 const {
   params: { id: jobOfferId }
@@ -26,6 +27,8 @@ onMounted(async () => {
 </script>
 
 <template>
+  <GoToHomeButton />
+
   <section class="bg-green-50">
     <BaseLoadingIndicator v-if="state.isLoading" />
 
