@@ -5,6 +5,11 @@ const jobOfferRoutes: readonly RouteRecordRaw[] = [
     path: "/job-offers",
     name: "jobOffers",
     component: () => import("@/jobOffer/views/JobOffersView.vue")
+  },
+  {
+    path: "/job-offers/:id",
+    name: "jobOffer",
+    component: () => import("@/jobOffer/views/JobOfferView.vue")
   }
 ]
 

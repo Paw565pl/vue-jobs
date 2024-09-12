@@ -2,6 +2,7 @@
 import type { JobOffer } from "@/jobOffer/entities/jobOffer"
 import { Icon } from "@iconify/vue"
 import { computed, ref } from "vue"
+import { RouterLink } from "vue-router"
 
 interface JobOfferProps {
   jobOffer: JobOffer
@@ -48,12 +49,12 @@ const truncatedDescription = computed(() => {
           <Icon icon="prime:map-marker" class="text-orange-700" />
           {{ jobOffer.location }}
         </div>
-        <a
-          :href="`/job-offer/${jobOffer.id}`"
+        <RouterLink
+          :to="`/job-offers/${jobOffer.id}`"
           class="h-[36px] rounded-lg bg-green-500 px-4 py-2 text-center text-sm text-white hover:bg-green-600"
         >
           Read More
-        </a>
+        </RouterLink>
       </div>
     </div>
   </div>
