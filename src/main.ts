@@ -5,8 +5,8 @@ import { createPinia } from "pinia"
 import { createApp } from "vue"
 import Toast from "vue-toastification"
 
-import App from "./App.vue"
-import router from "./core/router"
+import App from "@/App.vue"
+import router from "@/core/router"
 
 const app = createApp(App)
 

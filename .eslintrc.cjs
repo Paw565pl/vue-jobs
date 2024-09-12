@@ -11,5 +11,9 @@ module.exports = {
   ],
   parserOptions: {
     ecmaVersion: "latest"
+  },
+  plugins: ["no-relative-import-paths"],
+  rules: {
+    "no-relative-import-paths/no-relative-import-paths": ["warn", { rootDir: "src", prefix: "@" }]
   }
 }
