@@ -6,6 +6,7 @@ module.exports = {
   extends: [
     "eslint:recommended",
     "plugin:vue/vue3-essential",
+    "plugin:@tanstack/eslint-plugin-query/recommended",
     "@vue/eslint-config-typescript/recommended",
     "@vue/eslint-config-prettier/skip-formatting"
   ],
