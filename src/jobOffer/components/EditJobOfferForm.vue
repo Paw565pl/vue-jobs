@@ -29,7 +29,7 @@ onMounted(async () => {
   try {
     const { data } = await axios.get<JobOffer>(`http://localhost:5000/job-offers/${jobOfferId}`)
     const { type, title, description, salary, location, company } = data
-    Object.assign(form, { type, title, description, salary, location, company, })
+    Object.assign(form, { type, title, description, salary, location, company })
   } catch (error) {
     console.error(error)
   }
