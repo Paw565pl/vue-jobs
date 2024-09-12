@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import EditJobOfferForm from "../components/EditJobOfferForm.vue"
+import EditJobOfferForm from "@/jobOffer/components/EditJobOfferForm.vue"
 </script>
 
 <template>
