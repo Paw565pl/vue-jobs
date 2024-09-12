@@ -1,14 +1,17 @@
 <script lang="ts" setup>
+import GoToHomeButton from "@/jobOffer/components/GoToHomeButton.vue"
 import type { JobOffer } from "@/jobOffer/entities/jobOffer"
+import { Icon } from "@iconify/vue"
 import axios from "axios"
 import { onMounted, reactive } from "vue"
-import { RouterLink, useRoute } from "vue-router"
-import { Icon } from "@iconify/vue"
-import GoToHomeButton from "@/jobOffer/components/GoToHomeButton.vue"
+import { RouterLink, useRoute, useRouter } from "vue-router"
+import { useToast } from "vue-toastification"
 
 const {
   params: { id: jobOfferId }
 } = useRoute()
+const router = useRouter()
+const toast = useToast()
 
 const state = reactive({
   jobOffer: {} as JobOffer,
@@ -24,6 +27,20 @@ onMounted(async () => {
     state.isLoading = false
   }
 })
+
+const deleteJob = async () => {
+  try {
+    const confirmation = window.confirm("Are you sure you want to delete this job offer?")
+    if (!confirmation) return
+
+    await axios.delete(`http://localhost:5000/job-offers/${jobOfferId}`)
+    toast.success("Job Offer deleted successfully!")
+    router.push("/job-offers")
+  } catch (error) {
+    toast.error("Job Offer was not deleted!")
+    console.error(error)
+  }
+}
 </script>
 
 <template>
@@ -89,6 +106,7 @@ onMounted(async () => {
               >Edit Job</RouterLink
             >
             <button
+              @click="deleteJob"
               class="focus:shadow-outline mt-4 block w-full rounded-full bg-red-500 px-4 py-2 font-bold text-white hover:bg-red-600 focus:outline-none"
             >
               Delete Job
