@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import BaseLoadingIndicator from "@/core/components/base/BaseLoadingIndicator.vue"
 import JobOfferCard from "@/jobOffer/components/JobOfferCard.vue"
 import ShowAllJobsButton from "@/jobOffer/components/ShowAllJobsButton.vue"
 import type { JobOffer } from "@/jobOffer/entities/jobOffer"
@@ -34,10 +35,7 @@ onMounted(async () => {
       <h2 class="text-3xl font-bold text-green-500 mb-6 text-center">Browse Jobs</h2>
     </div>
 
-    <div v-if="state.isLoading" role="progressbar" class="flex items-center gap-2">
-      <div class="border-gray-300 h-10 w-10 animate-spin rounded-full border-8 border-t-blue-600" />
-      <span>Loading...</span>
-    </div>
+    <BaseLoadingIndicator v-if="state.isLoading" />
 
     <div v-else class="grid grid-cols-1 gap-6 md:grid-cols-3">
       <JobOfferCard
