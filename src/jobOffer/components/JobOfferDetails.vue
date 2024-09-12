@@ -4,7 +4,7 @@ import axios from "axios"
 import { onMounted, reactive } from "vue"
 import { RouterLink, useRoute } from "vue-router"
 import { Icon } from "@iconify/vue"
-import GoToHomeButton from "./GoToHomeButton.vue"
+import GoToHomeButton from "@/jobOffer/components/GoToHomeButton.vue"
 
 const {
   params: { id: jobOfferId }
