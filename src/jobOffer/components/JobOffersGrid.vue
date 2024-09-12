@@ -37,7 +37,7 @@ onMounted(async () => {
 
     <BaseLoadingIndicator v-if="state.isLoading" />
 
-    <div v-else class="grid grid-cols-1 gap-6 md:grid-cols-3">
+    <div v-else class="grid grid-cols-1 gap-6 md:grid-cols-3 max-w-7xl mx-auto">
       <JobOfferCard
         v-for="jobOffer in state.jobOffers.slice(0, limit ?? state.jobOffers.length)"
         :key="jobOffer.id"

@@ -50,8 +50,8 @@ const deleteJob = async () => {
     <BaseLoadingIndicator v-if="state.isLoading" />
 
     <div v-else class="container m-auto px-6 py-10">
-      <div class="md:grid-cols-70/30 grid w-full grid-cols-1 gap-6">
-        <main>
+      <div class="md:grid-cols-4 grid w-full grid-cols-1 gap-6">
+        <main class="md:col-span-3">
           <div class="rounded-lg bg-white p-6 text-center shadow-md md:text-left">
             <div class="mb-4 text-gray-500">{{ state.jobOffer.type }}</div>
             <h1 class="mb-4 text-3xl font-bold">{{ state.jobOffer.title }}</h1>
