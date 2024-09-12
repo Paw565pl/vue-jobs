@@ -7,7 +7,7 @@ import { RouterLink } from "vue-router"
 const links: NavBarLinkProps[] = [
   { path: "/", text: "Home" },
   { path: "/job-offers", text: "Jobs" },
-  { path: "/add-job-offer", text: "Add Job" }
+  { path: "/job-offers/add", text: "Add Job" }
 ]
 </script>
 
