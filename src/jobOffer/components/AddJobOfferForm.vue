@@ -3,7 +3,7 @@ import axios from "axios"
 import { reactive } from "vue"
 import { useRouter } from "vue-router"
 import { useToast } from "vue-toastification"
-import type { JobOffer } from "../entities/jobOffer"
+import type { JobOffer } from "@/jobOffer/entities/jobOffer"
 
 const router = useRouter()
 const toast = useToast()
