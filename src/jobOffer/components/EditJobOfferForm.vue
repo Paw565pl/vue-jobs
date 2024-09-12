@@ -28,15 +28,8 @@ const form = reactive({
 onMounted(async () => {
   try {
     const { data } = await axios.get<JobOffer>(`http://localhost:5000/job-offers/${jobOfferId}`)
-    form.type = data.type
-    form.title = data.title
-    form.description = data.description
-    form.salary = data.salary
-    form.location = data.location
-    form.company.name = data.company.name
-    form.company.description = data.company.description
-    form.company.contactEmail = data.company.contactEmail
-    form.company.contactPhone = data.company.contactPhone
+    const { type, title, description, salary, location, company } = data
+    Object.assign(form, { type, title, description, salary, location, company })
   } catch (error) {
     console.error(error)
   }
