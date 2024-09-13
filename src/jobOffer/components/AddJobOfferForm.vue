@@ -2,6 +2,7 @@
 import BaseFormInput from "@/core/components/base/BaseFormInput.vue"
 import BaseFormSelect from "@/core/components/base/BaseFormSelect.vue"
 import BaseFormTextArea from "@/core/components/base/BaseFormTextArea.vue"
+import useCreateJobOffer from "@/jobOffer/composables/useCreateJobOffer"
 import type { JobOfferFormValues } from "@/jobOffer/schemas/jobOfferSchema"
 import jobOfferSchema from "@/jobOffer/schemas/jobOfferSchema"
 import { toTypedSchema } from "@vee-validate/zod"
@@ -11,6 +12,7 @@ import { useToast } from "vue-toastification"
 
 const router = useRouter()
 const toast = useToast()
+const { mutate: createJobOffer } = useCreateJobOffer()
 
 const jobTypeOptions = [
   { value: "Full-Time", label: "Full-Time" },
@@ -35,9 +37,18 @@ const salaryOptions = [
 const validationSchema = toTypedSchema(jobOfferSchema)
 const { handleSubmit } = useForm<JobOfferFormValues>({ validationSchema })
 
-const onSubmit = handleSubmit((values) => {
-  console.log(values)
-})
+const onSubmit = handleSubmit((values) =>
+  createJobOffer(values, {
+    onSuccess: (newJobOffer) => {
+      toast.success("Job Offer added successfully!")
+      router.push(`/job-offers/${newJobOffer.id}`)
+    },
+    onError: (error) => {
+      toast.error("Job Offer was not added!")
+      console.error(error)
+    }
+  })
+)
 </script>
 
 <template>
