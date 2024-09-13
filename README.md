@@ -1,39 +1,17 @@
 # Vue Jobs
 
-This template should help get you started developing with Vue 3 in Vite.
+This is a simple web app made with Vue 3 and Vite. It leverages Vue Query for efficient data fetching, Vue Router for seamless navigation, and Tailwind CSS for modern styling. The app uses JSON Server as a mock API to simulate backend operations. I developed this app to help me learn Vue.
 
-## Recommended IDE Setup
+### How to run it locally?
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
-
-## Type Support for `.vue` Imports in TS
-
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
-
-## Project Setup
+Simply run those commands after **cloning the repository**.
 
 ```sh
 pnpm install
 ```
 
-### Compile and Hot-Reload for Development
-
 ```sh
-pnpm dev
+pnpm start
 ```
 
-### Type-Check, Compile and Minify for Production
-
-```sh
-pnpm build
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-pnpm lint
-```
+That's all! Now simply hit [http://localhost:5173](http://localhost:5173) and enjoy using the app. Server will be running on [http://localhost:5000](http://localhost:5000).
