@@ -21,7 +21,7 @@ const useCreateJobOffer = () => {
 
       const previousJobOffers = queryClient.getQueryData<JobOffer[]>(fetchJobOffersQueryKey)
 
-      queryClient.setQueryData(fetchJobOffersQueryKey, (oldData: JobOffer[]) => [...oldData, newJobOffer])
+      queryClient.setQueryData(fetchJobOffersQueryKey, (oldJobOffers: JobOffer[]) => [...oldJobOffers, newJobOffer])
 
       return previousJobOffers
     },
