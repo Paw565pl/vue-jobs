@@ -3,12 +3,12 @@ import type { JobOffer } from "@/jobOffer/entities/jobOffer"
 import { useQuery } from "@tanstack/vue-query"
 import type { AxiosError } from "axios"
 
-const fetchJobOffer = async (id: string | number) => {
+const fetchJobOffer = async (id: string) => {
   const { data } = await apiService.get<JobOffer>(`/job-offers/${id}`)
   return data
 }
 
-const useFetchJobOffer = (id: string | number) =>
+const useFetchJobOffer = (id: string) =>
   useQuery<JobOffer, AxiosError>({
     queryKey: ["jobOffers", id],
     queryFn: () => fetchJobOffer(id),
