@@ -55,7 +55,7 @@ const onSubmit = handleSubmit((values) =>
   <section class="bg-green-50">
     <div class="container m-auto max-w-2xl py-14">
       <div class="m-4 mb-4 rounded-md border bg-white px-6 py-8 shadow-md md:m-0">
-        <h2 class="mb-6 text-center text-3xl font-semibold">Add Job</h2>
+        <h2 class="mb-6 text-center text-3xl font-semibold">Add Job Offer</h2>
         <form @submit="onSubmit" class="space-y-4">
           <div>
             <BaseFormSelect label="Job Type" name="type" id="type" :options="jobTypeOptions" />
@@ -136,7 +136,7 @@ const onSubmit = handleSubmit((values) =>
               type="submit"
               class="focus:shadow-outline w-full rounded-full bg-green-500 px-4 py-2 font-bold text-white hover:bg-green-600 focus:outline-none"
             >
-              Add Job Offer
+              Add
             </button>
           </div>
         </form>
