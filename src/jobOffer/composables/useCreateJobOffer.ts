@@ -13,7 +13,7 @@ const createJobOffer = async (payload: JobOfferFormValues) => {
 const useCreateJobOffer = () => {
   const queryClient = useQueryClient()
 
-  return useMutation<JobOffer, AxiosError, JobOfferFormValues, JobOffer[]>({
+  return useMutation<JobOffer, AxiosError, JobOfferFormValues, JobOffer[] | undefined>({
     mutationKey: ["createJobOffer"],
     mutationFn: (payload) => createJobOffer(payload),
     onMutate: async (newJobOffer) => {
@@ -21,7 +21,9 @@ const useCreateJobOffer = () => {
 
       const previousJobOffers = queryClient.getQueryData<JobOffer[]>(fetchJobOffersQueryKey)
 
-      queryClient.setQueryData(fetchJobOffersQueryKey, (oldJobOffers: JobOffer[]) => [...oldJobOffers, newJobOffer])
+      queryClient.setQueryData(fetchJobOffersQueryKey, (oldJobOffers?: JobOffer[]) =>
+        oldJobOffers ? [...oldJobOffers, newJobOffer] : [newJobOffer]
+      )
 
       return previousJobOffers
     },

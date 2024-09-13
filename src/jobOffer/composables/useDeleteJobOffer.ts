@@ -12,7 +12,7 @@ const deleteJobOffer = async (id: string) => {
 const useDeleteJobOffer = (id: string) => {
   const queryClient = useQueryClient()
 
-  return useMutation<void, AxiosError, void, JobOffer[]>({
+  return useMutation<void, AxiosError, void, JobOffer[] | undefined>({
     mutationKey: ["deleteJobOffer", id],
     mutationFn: () => deleteJobOffer(id),
     onMutate: async () => {
@@ -20,8 +20,8 @@ const useDeleteJobOffer = (id: string) => {
 
       const previousJobOffers = queryClient.getQueryData<JobOffer[]>(fetchJobOffersQueryKey)
 
-      queryClient.setQueryData(fetchJobOffersQueryKey, (oldJobOffers: JobOffer[]) =>
-        oldJobOffers.filter((offer) => offer.id.toString() !== id)
+      queryClient.setQueryData(fetchJobOffersQueryKey, (oldJobOffers?: JobOffer[]) =>
+        oldJobOffers ? oldJobOffers?.filter((offer) => offer.id.toString() !== id) : []
       )
 
       return previousJobOffers
