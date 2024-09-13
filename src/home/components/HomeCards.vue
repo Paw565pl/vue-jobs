@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import BaseCard from "@/core/components/base/BaseCard.vue"
+import { RouterLink } from "vue-router"
 </script>
 
 <template>
@@ -9,16 +10,19 @@ import BaseCard from "@/core/components/base/BaseCard.vue"
         <BaseCard>
           <h2 class="text-2xl font-bold">For Developers</h2>
           <p class="mb-4 mt-2">Browse our Vue jobs and start your career today</p>
-          <a href="jobs.html" class="inline-block rounded-lg bg-black px-4 py-2 text-white hover:bg-gray-700">
+          <RouterLink to="/job-offers" class="inline-block rounded-lg bg-black px-4 py-2 text-white hover:bg-gray-700">
             Browse Jobs
-          </a>
+          </RouterLink>
         </BaseCard>
         <BaseCard bg="bg-green-100">
           <h2 class="text-2xl font-bold">For Employers</h2>
           <p class="mb-4 mt-2">List your job to find the perfect developer for the role</p>
-          <a href="add-job.html" class="inline-block rounded-lg bg-green-500 px-4 py-2 text-white hover:bg-green-600">
+          <RouterLink
+            to="/job-offers/add"
+            class="inline-block rounded-lg bg-green-500 px-4 py-2 text-white hover:bg-green-600"
+          >
             Add Job
-          </a>
+          </RouterLink>
         </BaseCard>
       </div>
     </div>
