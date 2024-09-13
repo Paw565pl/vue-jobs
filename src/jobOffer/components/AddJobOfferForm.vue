@@ -1,166 +1,131 @@
 <script lang="ts" setup>
-import axios from "axios"
-import { reactive } from "vue"
+import BaseFormInput from "@/core/components/base/BaseFormInput.vue"
+import BaseFormSelect from "@/core/components/base/BaseFormSelect.vue"
+import BaseFormTextArea from "@/core/components/base/BaseFormTextArea.vue"
+import type { JobOfferFormValues } from "@/jobOffer/schemas/jobOfferSchema"
+import jobOfferSchema from "@/jobOffer/schemas/jobOfferSchema"
+import { toTypedSchema } from "@vee-validate/zod"
+import { useForm } from "vee-validate"
 import { useRouter } from "vue-router"
 import { useToast } from "vue-toastification"
-import type { JobOffer } from "@/jobOffer/entities/jobOffer"
 
 const router = useRouter()
 const toast = useToast()
 
-const form = reactive({
-  type: "Full-Time",
-  title: "",
-  description: "",
-  salary: "",
-  location: "",
-  company: {
-    name: "",
-    description: "",
-    contactEmail: "",
-    contactPhone: ""
-  }
-})
+const jobTypeOptions = [
+  { value: "Full-Time", label: "Full-Time" },
+  { value: "Part-Time", label: "Part-Time" },
+  { value: "Remote", label: "Remote" },
+  { value: "Internship", label: "Internship" }
+]
+const salaryOptions = [
+  { value: "Under $50K", label: "Under $50K" },
+  { value: "$50K - $60K", label: "$50K - $60K" },
+  { value: "$60K - $70K", label: "$60K - $70K" },
+  { value: "$70K - $80K", label: "$70K - $80K" },
+  { value: "$80K - $90K", label: "$80K - $90K" },
+  { value: "$90K - $100K", label: "$90K - $100K" },
+  { value: "$100K - $125K", label: "$100K - $125K" },
+  { value: "$125K - $150K", label: "$125K - $150K" },
+  { value: "$150K - $175K", label: "$150K - $175K" },
+  { value: "$175K - $200K", label: "$175K - $200K" },
+  { value: "Over $200K", label: "Over $200K" }
+]
 
-const handleSubmit = async () => {
-  try {
-    const { data: jobOffer } = await axios.post<JobOffer>("http://localhost:5000/job-offers", form)
-    toast.success("Job Offer added successfully!")
-    router.push(`/job-offers/${jobOffer.id}`)
-  } catch (error) {
-    toast.error("Job Offer was not added!")
-    console.error(error)
-  }
-}
+const validationSchema = toTypedSchema(jobOfferSchema)
+const { handleSubmit } = useForm<JobOfferFormValues>({ validationSchema })
+
+const onSubmit = handleSubmit((values) => {
+  console.log(values)
+})
 </script>
 
 <template>
   <section class="bg-green-50">
-    <div class="container m-auto max-w-2xl py-24">
+    <div class="container m-auto max-w-2xl py-14">
       <div class="m-4 mb-4 rounded-md border bg-white px-6 py-8 shadow-md md:m-0">
-        <form @submit.prevent="handleSubmit">
-          <h2 class="mb-6 text-center text-3xl font-semibold">Add Job</h2>
-
-          <div class="mb-4">
-            <label for="type" class="mb-2 block font-bold text-gray-700">Job Type</label>
-            <select v-model="form.type" id="type" name="type" class="w-full rounded border px-3 py-2" required>
-              <option value="Full-Time">Full-Time</option>
-              <option value="Part-Time">Part-Time</option>
-              <option value="Remote">Remote</option>
-              <option value="Internship">Internship</option>
-            </select>
+        <h2 class="mb-6 text-center text-3xl font-semibold">Add Job</h2>
+        <form @submit="onSubmit" class="space-y-4">
+          <div>
+            <BaseFormSelect label="Job Type" name="type" id="type" :options="jobTypeOptions" />
           </div>
 
-          <div class="mb-4">
-            <label class="mb-2 block font-bold text-gray-700">Job Listing Name</label>
-            <input
-              v-model="form.title"
-              type="text"
-              id="name"
-              name="name"
-              class="mb-2 w-full rounded border px-3 py-2"
-              placeholder="eg. Beautiful Apartment In Miami"
-              required
-            />
+          <div>
+            <BaseFormInput label="Job Offer Name" name="title" id="name" type="text" />
           </div>
-          <div class="mb-4">
-            <label for="description" class="mb-2 block font-bold text-gray-700">Description</label>
-            <textarea
-              v-model="form.description"
-              id="description"
+
+          <div>
+            <BaseFormTextArea
               name="description"
-              class="w-full rounded border px-3 py-2"
+              id="description"
+              label="Description"
               rows="4"
               placeholder="Add any job duties, expectations, requirements, etc"
-            ></textarea>
+            />
           </div>
 
-          <div class="mb-4">
-            <label for="type" class="mb-2 block font-bold text-gray-700">Salary</label>
-            <select v-model="form.salary" id="salary" name="salary" class="w-full rounded border px-3 py-2" required>
-              <option value="Under $50K">under $50K</option>
-              <option value="$50K - $60K">$50 - $60K</option>
-              <option value="$60K - $70K">$60 - $70K</option>
-              <option value="$70K - $80K">$70 - $80K</option>
-              <option value="$80K - $90K">$80 - $90K</option>
-              <option value="$90K - $100K">$90 - $100K</option>
-              <option value="$100K - $125K">$100 - $125K</option>
-              <option value="$125K - $150K">$125 - $150K</option>
-              <option value="$150K - $175K">$150 - $175K</option>
-              <option value="$175K - $200K">$175 - $200K</option>
-              <option value="Over $200K">Over $200K</option>
-            </select>
+          <div>
+            <BaseFormSelect label="Salary" name="salary" id="salary" :options="salaryOptions" />
           </div>
 
-          <div class="mb-4">
-            <label class="mb-2 block font-bold text-gray-700">Location</label>
-            <input
-              v-model="form.location"
-              type="text"
-              id="location"
+          <div>
+            <BaseFormInput
+              label="Location"
               name="location"
-              class="mb-2 w-full rounded border px-3 py-2"
-              placeholder="Company Location"
-              required
+              id="location"
+              type="text"
+              placeholder="eg. Beautiful Apartment In Miami"
             />
           </div>
 
           <h3 class="mb-5 text-2xl">Company Info</h3>
 
-          <div class="mb-4">
-            <label for="company" class="mb-2 block font-bold text-gray-700">Company Name</label>
-            <input
-              v-model="form.company.name"
+          <div>
+            <BaseFormInput
+              label="Company Name"
+              name="company.name"
+              id="company.name"
               type="text"
-              id="company"
-              name="company"
-              class="w-full rounded border px-3 py-2"
               placeholder="Company Name"
             />
           </div>
 
-          <div class="mb-4">
-            <label for="company_description" class="mb-2 block font-bold text-gray-700">Company Description</label>
-            <textarea
-              v-model="form.company.description"
-              id="company_description"
-              name="company_description"
-              class="w-full rounded border px-3 py-2"
+          <div>
+            <BaseFormTextArea
+              label="Company Description"
+              name="company.description"
+              id="company.description"
               rows="4"
               placeholder="What does your company do?"
-            ></textarea>
-          </div>
-
-          <div class="mb-4">
-            <label for="contact_email" class="mb-2 block font-bold text-gray-700">Contact Email</label>
-            <input
-              v-model="form.company.contactEmail"
-              type="email"
-              id="contact_email"
-              name="contact_email"
-              class="w-full rounded border px-3 py-2"
-              placeholder="Email address for applicants"
-              required
             />
           </div>
-          <div class="mb-4">
-            <label for="contact_phone" class="mb-2 block font-bold text-gray-700">Contact Phone</label>
-            <input
-              v-model="form.company.contactPhone"
-              type="tel"
-              id="contact_phone"
-              name="contact_phone"
-              class="w-full rounded border px-3 py-2"
-              placeholder="Optional phone for applicants"
+
+          <div>
+            <BaseFormInput
+              label="Contact Email"
+              name="company.contactEmail"
+              id="company.contactEmail"
+              type="text"
+              placeholder="Email address for applicants"
+            />
+          </div>
+
+          <div>
+            <BaseFormInput
+              label="Contact Phone"
+              name="company.contactPhone"
+              id="company.contactPhone"
+              type="text"
+              placeholder="Phone number for applicants"
             />
           </div>
 
           <div>
             <button
-              class="focus:shadow-outline w-full rounded-full bg-green-500 px-4 py-2 font-bold text-white hover:bg-green-600 focus:outline-none"
               type="submit"
+              class="focus:shadow-outline w-full rounded-full bg-green-500 px-4 py-2 font-bold text-white hover:bg-green-600 focus:outline-none"
             >
-              Add Job
+              Add Job Offer
             </button>
           </div>
         </form>
