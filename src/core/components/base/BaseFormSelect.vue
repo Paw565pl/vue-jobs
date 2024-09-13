@@ -22,6 +22,6 @@ const { value, errorMessage } = useField(() => name)
     <select class="mb-2 w-full rounded border px-3 py-2" v-bind="props" v-model="value" :name="name">
       <option v-for="option in options" :key="option.value" :value="option.value">{{ option.label }}</option>
     </select>
-    <p class="text-red-500" as="p">{{ errorMessage }}</p>
+    <p class="text-red-500 text-sm" as="p">{{ errorMessage }}</p>
   </div>
 </template>
