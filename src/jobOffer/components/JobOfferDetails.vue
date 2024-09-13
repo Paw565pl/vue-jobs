@@ -1,9 +1,9 @@
 <script lang="ts" setup>
 import BaseLoadingIndicator from "@/core/components/base/BaseLoadingIndicator.vue"
 import GoToHomeButton from "@/jobOffer/components/GoToHomeButton.vue"
+import useDeleteJobOffer from "@/jobOffer/composables/useDeleteJobOffer"
 import useFetchJobOffer from "@/jobOffer/composables/useFetchJobOffer"
 import { Icon } from "@iconify/vue"
-import axios from "axios"
 import { RouterLink, useRoute, useRouter } from "vue-router"
 import { useToast } from "vue-toastification"
 
@@ -14,19 +14,22 @@ const router = useRouter()
 const toast = useToast()
 
 const { data: jobOffer, isLoading } = useFetchJobOffer(jobOfferId.toString())
+const { mutate: deleteJobOffer } = useDeleteJobOffer(jobOfferId.toString())
 
-const deleteJob = async () => {
-  try {
-    const confirmation = window.confirm("Are you sure you want to delete this job offer?")
-    if (!confirmation) return
+const deleteJobHandler = () => {
+  const confirmation = window.confirm("Are you sure you want to delete this job offer?")
+  if (!confirmation) return
 
-    await axios.delete(`http://localhost:5000/job-offers/${jobOfferId}`)
-    toast.success("Job Offer deleted successfully!")
-    router.push("/job-offers")
-  } catch (error) {
-    toast.error("Job Offer was not deleted!")
-    console.error(error)
-  }
+  deleteJobOffer(undefined, {
+    onSuccess: () => {
+      router.push("/job-offers")
+      toast.success("Job Offer deleted successfully!")
+    },
+    onError: (error) => {
+      toast.error("Job Offer was not deleted!")
+      console.error(error)
+    }
+  })
 }
 </script>
 
@@ -90,13 +93,13 @@ const deleteJob = async () => {
             <RouterLink
               :to="`/job-offers/${jobOffer?.id}/edit`"
               class="focus:shadow-outline mt-4 block w-full rounded-full bg-green-500 px-4 py-2 text-center font-bold text-white hover:bg-green-600 focus:outline-none"
-              >Edit Job</RouterLink
+              >Edit Job Offer</RouterLink
             >
             <button
-              @click="deleteJob"
+              @click="deleteJobHandler"
               class="focus:shadow-outline mt-4 block w-full rounded-full bg-red-500 px-4 py-2 font-bold text-white hover:bg-red-600 focus:outline-none"
             >
-              Delete Job
+              Delete Job Offer
             </button>
           </div>
         </aside>
