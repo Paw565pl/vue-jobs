@@ -1,5 +1,5 @@
 import apiService from "@/core/services/apiService"
-import { fetchJobOffersQueryKey } from "@/jobOffer/composables/useFetchJobOffers"
+import { jobOffersQueryKey } from "@/jobOffer/composables/useFetchJobOffers"
 import type { JobOffer } from "@/jobOffer/entities/jobOffer"
 import { useMutation, useQueryClient } from "@tanstack/vue-query"
 import type { AxiosError } from "axios"
@@ -16,21 +16,21 @@ const useDeleteJobOffer = (id: string) => {
     mutationKey: ["deleteJobOffer", id],
     mutationFn: () => deleteJobOffer(id),
     onMutate: async () => {
-      await queryClient.cancelQueries({ queryKey: fetchJobOffersQueryKey })
+      await queryClient.cancelQueries({ queryKey: jobOffersQueryKey })
 
-      const previousJobOffers = queryClient.getQueryData<JobOffer[]>(fetchJobOffersQueryKey)
+      const previousJobOffers = queryClient.getQueryData<JobOffer[]>(jobOffersQueryKey)
 
-      queryClient.setQueryData(fetchJobOffersQueryKey, (oldJobOffers?: JobOffer[]) =>
+      queryClient.setQueryData(jobOffersQueryKey, (oldJobOffers?: JobOffer[]) =>
         oldJobOffers ? oldJobOffers?.filter((offer) => offer.id.toString() !== id) : []
       )
 
       return previousJobOffers
     },
     onError: (_, __, previousJobOffers) => {
-      queryClient.setQueryData(fetchJobOffersQueryKey, previousJobOffers)
+      queryClient.setQueryData(jobOffersQueryKey, previousJobOffers)
     },
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: fetchJobOffersQueryKey })
+      queryClient.invalidateQueries({ queryKey: jobOffersQueryKey })
     }
   })
 }

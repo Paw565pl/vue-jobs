@@ -1,5 +1,5 @@
 import apiService from "@/core/services/apiService"
-import { fetchJobOffersQueryKey } from "@/jobOffer/composables/useFetchJobOffers"
+import { jobOffersQueryKey } from "@/jobOffer/composables/useFetchJobOffers"
 import type { JobOffer } from "@/jobOffer/entities/jobOffer"
 import type { JobOfferFormValues } from "@/jobOffer/schemas/jobOfferSchema"
 import { useMutation, useQueryClient } from "@tanstack/vue-query"
@@ -17,21 +17,21 @@ const useCreateJobOffer = () => {
     mutationKey: ["createJobOffer"],
     mutationFn: (payload) => createJobOffer(payload),
     onMutate: async (newJobOffer) => {
-      await queryClient.cancelQueries({ queryKey: fetchJobOffersQueryKey })
+      await queryClient.cancelQueries({ queryKey: jobOffersQueryKey })
 
-      const previousJobOffers = queryClient.getQueryData<JobOffer[]>(fetchJobOffersQueryKey)
+      const previousJobOffers = queryClient.getQueryData<JobOffer[]>(jobOffersQueryKey)
 
-      queryClient.setQueryData(fetchJobOffersQueryKey, (oldJobOffers?: JobOffer[]) =>
+      queryClient.setQueryData(jobOffersQueryKey, (oldJobOffers?: JobOffer[]) =>
         oldJobOffers ? [...oldJobOffers, newJobOffer] : [newJobOffer]
       )
 
       return previousJobOffers
     },
     onError: (_, __, previousJobOffers) => {
-      queryClient.setQueryData(fetchJobOffersQueryKey, previousJobOffers)
+      queryClient.setQueryData(jobOffersQueryKey, previousJobOffers)
     },
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: fetchJobOffersQueryKey })
+      queryClient.invalidateQueries({ queryKey: jobOffersQueryKey })
     }
   })
 }

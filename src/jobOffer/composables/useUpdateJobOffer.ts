@@ -1,5 +1,5 @@
 import apiService from "@/core/services/apiService"
-import { fetchJobOffersQueryKey } from "@/jobOffer/composables/useFetchJobOffers"
+import { jobOffersQueryKey } from "@/jobOffer/composables/useFetchJobOffers"
 import type { JobOffer } from "@/jobOffer/entities/jobOffer"
 import type { JobOfferFormValues } from "@/jobOffer/schemas/jobOfferSchema"
 import { useMutation, useQueryClient } from "@tanstack/vue-query"
@@ -11,7 +11,7 @@ const updateJobOffer = async (id: string, payload: JobOfferFormValues) => {
 }
 
 const useUpdateJobOffer = (id: string) => {
-  const fetchJobOfferQueryKey = [...fetchJobOffersQueryKey, id]
+  const jobOfferQueryKey = [...jobOffersQueryKey, id]
   const queryClient = useQueryClient()
 
   return useMutation<
@@ -23,28 +23,28 @@ const useUpdateJobOffer = (id: string) => {
     mutationKey: ["updateJobOffer", id],
     mutationFn: (payload) => updateJobOffer(id, payload),
     onMutate: async (updatedJobOffer) => {
-      await queryClient.cancelQueries({ queryKey: fetchJobOffersQueryKey })
+      await queryClient.cancelQueries({ queryKey: jobOffersQueryKey })
 
-      const previousJobOffers = queryClient.getQueryData<JobOffer[]>(fetchJobOffersQueryKey)
-      const previousJobOffer = queryClient.getQueryData<JobOffer>(fetchJobOfferQueryKey)
+      const previousJobOffers = queryClient.getQueryData<JobOffer[]>(jobOffersQueryKey)
+      const previousJobOffer = queryClient.getQueryData<JobOffer>(jobOfferQueryKey)
 
-      queryClient.setQueryData(fetchJobOffersQueryKey, (oldJobOffers?: JobOffer[]) =>
+      queryClient.setQueryData(jobOffersQueryKey, (oldJobOffers?: JobOffer[]) =>
         oldJobOffers
           ? oldJobOffers?.map((offer) => (offer.id.toString() === id ? updatedJobOffer : offer))
           : [updatedJobOffer]
       )
-      queryClient.setQueryData(fetchJobOfferQueryKey, (oldJobOffer?: JobOffer) =>
+      queryClient.setQueryData(jobOfferQueryKey, (oldJobOffer?: JobOffer) =>
         oldJobOffer ? { ...oldJobOffer, ...updatedJobOffer } : updatedJobOffer
       )
 
       return { previousJobOffers, previousJobOffer }
     },
     onError: (_, __, context) => {
-      queryClient.setQueryData(fetchJobOffersQueryKey, context?.previousJobOffers)
-      queryClient.setQueryData(fetchJobOfferQueryKey, context?.previousjobOffer)
+      queryClient.setQueryData(jobOffersQueryKey, context?.previousJobOffers)
+      queryClient.setQueryData(jobOfferQueryKey, context?.previousjobOffer)
     },
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: fetchJobOffersQueryKey })
+      queryClient.invalidateQueries({ queryKey: jobOffersQueryKey })
     }
   })
 }

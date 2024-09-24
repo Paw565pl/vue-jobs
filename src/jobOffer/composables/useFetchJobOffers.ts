@@ -8,11 +8,11 @@ const fetchJobOffers = async () => {
   return data
 }
 
-export const fetchJobOffersQueryKey = ["jobOffers"]
+export const jobOffersQueryKey = ["jobOffers"]
 
 const useFetchJobOffers = () =>
   useQuery<JobOffer[], AxiosError>({
-    queryKey: fetchJobOffersQueryKey,
+    queryKey: jobOffersQueryKey,
     queryFn: fetchJobOffers,
     staleTime: 1000 * 60 * 10 // 10 minutes
   })
